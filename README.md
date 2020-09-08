@@ -1,2 +1,4 @@
 # Auto-Hacking-Scripts
-These are auto rooting scripts
+
+These are for learning purpose only. All the rights belong to the respective owners of the machines.
+Use wisely.
